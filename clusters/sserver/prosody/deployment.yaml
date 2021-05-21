@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prosody
+  namespace: prosody
+  labels:
+    app: prosody
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prosody
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prosody
+    spec:
+      containers:
+        - image: prosody/prosody:0.11.9
+          name: prosody
+          ports:
+            - containerPort: 5222
+              name: c2s
+            - containerPort: 5269
+              name: s2s
+          volumeMounts:
+            - mountPath: /etc/prosody
+              name: configuration
+              readOnly: true
+            - mountPath: /var/lib/prosody
+              name: data
+            - mountPath: /etc/prosody/certs
+              name: cert
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: configuration
+          secret:
+            secretName: configuration-secrets
+        - name: data
+          persistentVolumeClaim:
+            claimName: prosody-media
+        - name: cert
+          secret:
+            secretName: prosody-tls-cert
+            items:
+              - key: tls.crt
+                path: ssene.ca.crt
+              - key: tls.key
+                path: ssene.ca.key
+status: {}

@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgresql
+  namespace: prosody
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: postgresql
+      version: 10.3.6
+      sourceRef:
+        name: bitnami
+        kind: HelmRepository
+  valuesFrom:
+    - kind: Secret
+      name: postgresql-credentials
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 13.1.0
+    persistence:
+      existingClaim: database-prosody
+    volumePermissions:
+      enabled: true
+    psp:
+      create: true
+    rbac:
+      create: true

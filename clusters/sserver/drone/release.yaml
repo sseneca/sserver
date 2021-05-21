@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: drone
+  namespace: drone
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: drone
+      version: 0.1.7
+      sourceRef:
+        name: drone
+        kind: HelmRepository
+  valuesFrom:
+    - kind: Secret
+      name: drone-secrets
+  values:
+    image:
+      repository: drone/drone
+      tag: 1.10.1
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+      - host: drone.ssene.ca
+        paths:
+        - "/"
+      tls:
+      - hosts:
+        - drone.ssene.ca
+        secretName: drone-tls-cert
+    persistentVolume:
+      enabled: false
+    env:
+      DRONE_SERVER_HOST: drone.ssene.ca
+      DRONE_SERVER_PROTO: https
+      DRONE_DATABASE_DRIVER: postgres
+      DRONE_GITEA_SERVER: https://git.ssene.ca
+      DRONE_AGENTS_ENABLED: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgresql
+  namespace: drone
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: postgresql
+      version: 9.8.1
+      sourceRef:
+        name: bitnami
+        kind: HelmRepository
+  valuesFrom:
+    - kind: Secret
+      name: postgresql
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 13.0.0
+    persistence:
+      existingClaim: database-drone
+    volumePermissions:
+      enabled: true
+    psp:
+      create: true
+    rbac:
+      create: true

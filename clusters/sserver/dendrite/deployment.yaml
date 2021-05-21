@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dendrite
+  namespace: dendrite
+  labels:
+    app: dendrite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dendrite
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: dendrite
+    spec:
+      containers:
+        - image: matrixdotorg/dendrite-monolith:v0.3.11
+          name: monolith
+          ports:
+            - containerPort: 8008
+              name: monolith
+          volumeMounts:
+            - mountPath: /etc/dendrite
+              name: encryption-secrets
+              readOnly: true
+            - mountPath: /var/dendrite/media
+              name: media
+              readOnly: false
+      restartPolicy: Always
+      volumes:
+        - name: encryption-secrets
+          secret:
+            secretName: encryption-secrets
+        - name: media
+          persistentVolumeClaim:
+            claimName: dendrite-media
+status: {}

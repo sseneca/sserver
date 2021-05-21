@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: drone-runner-kube
+  namespace: drone
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: drone-runner-kube
+      version: 0.1.5
+      sourceRef:
+        name: drone
+        kind: HelmRepository
+  valuesFrom:
+    - kind: Secret
+      name: drone-runner-kube-secrets
+  values:
+    image:
+      repository: drone/drone-runner-kube
+      tag: 1.0.0-beta.6
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+      - host: drone-runner01.ssene.ca
+        paths:
+        - "/"
+      tls:
+      - hosts:
+        - drone-runner01.ssene.ca
+        secretName: drone-runner01-tls-cert
+    rbac:
+      buildNamespaces:
+        - drone
+    env:
+      DRONE_RPC_HOST: drone.ssene.ca
+      DRONE_RPC_PROTO: https
+      DRONE_NAMESPACE_DEFAULT: drone

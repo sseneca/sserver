@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: monolith
+  namespace: dendrite
+spec:
+  ports:
+    - name: monolith
+      port: 8008
+      targetPort: 8008
+  selector:
+    app: dendrite
+status:
+  loadBalancer: {}

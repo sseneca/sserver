@@ -1,0 +1,79 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+spec:
+  chart:
+    spec:
+      chart: jellyfin
+      version: 5.1.0
+      sourceRef:
+        name: k8s-at-home
+        kind: HelmRepository
+  values:
+    image:
+      repository: jellyfin/jellyfin
+      tag: 10.7.5
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+      - host: jellyfin.ssene.ca
+        paths:
+        - path: /
+      tls:
+      - hosts:
+        - jellyfin.ssene.ca
+        secretName: jellyfin-tls-cert
+    persistence:
+      config:
+        enabled: true
+    additionalVolumes:
+    - name: music
+      persistentVolumeClaim:
+        claimName: jellyfin-music
+        readOnly: true
+    - name: podcasts
+      persistentVolumeClaim:
+        claimName: jellyfin-podcasts
+        readOnly: false
+    - name: youtube
+      persistentVolumeClaim:
+        claimName: jellyfin-youtube
+        readOnly: false
+    - name: lectures
+      persistentVolumeClaim:
+        claimName: jellyfin-lectures
+        readOnly: true
+    - name: shows
+      persistentVolumeClaim:
+        claimName: jellyfin-shows
+        readOnly: true
+    - name: books
+      persistentVolumeClaim:
+        claimName: jellyfin-books
+        readOnly: true
+    - name: movies
+      persistentVolumeClaim:
+        claimName: jellyfin-movies
+        readOnly: true
+    additionalVolumeMounts:
+    - name: music
+      mountPath: "/mnt/music"
+    - name: podcasts
+      mountPath: "/mnt/podcasts"
+    - name: youtube
+      mountPath: "/mnt/youtube"
+    - name: lectures
+      mountPath: "/mnt/lectures"
+    - name: shows
+      mountPath: "/mnt/shows"
+    - name: books
+      mountPath: "/mnt/books"
+    - name: movies
+      mountPath: "/mnt/movies"
+    resources:
+      limits:
+        gpu.intel.com/i915: 1
