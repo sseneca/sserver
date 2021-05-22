@@ -11,6 +11,7 @@ spec:
       version: 10.3.6
       sourceRef:
         name: bitnami
+        namespace: flux-system
         kind: HelmRepository
   valuesFrom:
     - kind: Secret

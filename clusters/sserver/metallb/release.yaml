@@ -5,12 +5,14 @@ metadata:
   namespace: metallb-system
 spec:
   interval: 5m
+  releaseName: metallb
   chart:
     spec:
       chart: metallb
       version: 2.3.6
       sourceRef:
         name: bitnami
+        namespace: flux-system
         kind: HelmRepository
   values:
     configInline:

@@ -5,6 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   interval: 5m
+  releaseName: intel-gpu-plugin
   chart:
     spec:
       chart: intel-gpu-plugin

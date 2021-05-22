@@ -5,6 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   interval: 5m
+  releaseName: ingress-nginx
   chart:
     spec:
       chart: ingress-nginx

@@ -5,6 +5,7 @@ metadata:
   namespace: gitea
 spec:
   interval: 5m
+  releaseName: gitea
   chart:
     spec:
       chart: gitea

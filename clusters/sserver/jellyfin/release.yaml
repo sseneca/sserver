@@ -5,12 +5,14 @@ metadata:
   namespace: jellyfin
 spec:
   interval: 5m
+  releaseName: jellyfin
   chart:
     spec:
       chart: jellyfin
       version: 5.1.0
       sourceRef:
         name: k8s-at-home
+        namespace: flux-system
         kind: HelmRepository
   values:
     image:
