@@ -5,6 +5,7 @@ metadata:
   namespace: nextcloud
 spec:
   interval: 5m
+  releaseName: nextcloud
   chart:
     spec:
       chart: nextcloud
