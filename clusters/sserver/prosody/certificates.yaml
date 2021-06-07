@@ -1,0 +1,29 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prosody-tls-cert
+  namespace: prosody
+  labels:
+    "use-dns-solver": "true"
+spec:
+  secretName: prosody-tls-cert
+  dnsNames:
+  - ssene.ca
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: conference-prosody-tls-cert
+  namespace: prosody
+spec:
+  secretName: conference-prosody-tls-cert
+  dnsNames:
+  - conference.xmpp.ssene.ca
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-prod

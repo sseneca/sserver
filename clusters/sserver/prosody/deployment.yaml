@@ -32,7 +32,7 @@ spec:
             - mountPath: /var/lib/prosody
               name: data
             - mountPath: /etc/prosody/certs
-              name: cert
+              name: certs
               readOnly: true
       restartPolicy: Always
       volumes:
@@ -42,12 +42,21 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: prosody-media
-        - name: cert
-          secret:
-            secretName: prosody-tls-cert
-            items:
-              - key: tls.crt
-                path: ssene.ca.crt
-              - key: tls.key
-                path: ssene.ca.key
+        - name: certs
+          projected:
+            sources:
+              - secret:
+                  name: prosody-tls-cert
+                  items:
+                    - key: tls.crt
+                      path: ssene.ca.crt
+                    - key: tls.key
+                      path: ssene.ca.key
+              - secret:
+                  name: conference-prosody-tls-cert
+                  items:
+                    - key: tls.crt
+                      path: conference.xmpp.ssene.ca.crt
+                    - key: tls.key
+                      path: conference.xmpp.ssene.ca.key
 status: {}
