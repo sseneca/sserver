@@ -8,13 +8,21 @@ spec:
     storage: 100Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
+  local:
     path: /srv/smb/media/music
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - sserver
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-music
+  name: music
   namespace: jellyfin
 spec:
   storageClassName: local-path
@@ -28,33 +36,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-podcasts
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /srv/smb/media/podcasts
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-podcasts
-  namespace: jellyfin
-spec:
-  storageClassName: local-path
-  volumeName: jellyfin-podcasts
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
   name: jellyfin-youtube
 spec:
   storageClassName: local-path
@@ -62,13 +43,21 @@ spec:
     storage: 50Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
+  local:
     path: /srv/smb/media/youtube
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - sserver
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-youtube
+  name: youtube
   namespace: jellyfin
 spec:
   storageClassName: local-path
@@ -82,60 +71,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-lectures
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /srv/smb/media/lectures
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-lectures
-  namespace: jellyfin
-spec:
-  storageClassName: local-path
-  volumeName: jellyfin-lectures
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jellyfin-shows
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 500Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /srv/smb/media/shows
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-shows
-  namespace: jellyfin
-spec:
-  storageClassName: local-path
-  volumeName: jellyfin-shows
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 500Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
   name: jellyfin-books
 spec:
   storageClassName: local-path
@@ -143,13 +78,21 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
+  local:
     path: /srv/smb/media/books
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - sserver
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-books
+  name: books
   namespace: jellyfin
 spec:
   storageClassName: local-path
@@ -170,17 +113,60 @@ spec:
     storage: 500Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
+  local:
     path: /srv/smb/media/movies
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - sserver
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-movies
+  name: movies
   namespace: jellyfin
 spec:
   storageClassName: local-path
   volumeName: jellyfin-movies
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-shows
+spec:
+  storageClassName: local-path
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /srv/smb/media/shows
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - sserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shows
+  namespace: jellyfin
+spec:
+  storageClassName: local-path
+  volumeName: jellyfin-shows
   accessModes:
     - ReadWriteOnce
   resources:

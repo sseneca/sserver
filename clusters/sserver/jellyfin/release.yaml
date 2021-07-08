@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: jellyfin
-      version: 5.1.0
+      version: 8.2.0
       sourceRef:
         name: k8s-at-home
         namespace: flux-system
@@ -18,65 +18,49 @@ spec:
     image:
       repository: jellyfin/jellyfin
       tag: 10.7.6
+    env:
+      TZ: "Europe/London"
     ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts:
-      - host: jellyfin.ssene.ca
-        paths:
-        - path: /
-      tls:
-      - hosts:
-        - jellyfin.ssene.ca
-        secretName: jellyfin-tls-cert
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+        - host: jellyfin.ssene.ca
+          paths:
+          - path: /
+        tls:
+        - hosts:
+          - jellyfin.ssene.ca
+          secretName: jellyfin-tls-cert
     persistence:
       config:
         enabled: true
-    additionalVolumes:
-    - name: music
-      persistentVolumeClaim:
-        claimName: jellyfin-music
+      cache:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
+      music:
+        enabled: true
         readOnly: true
-    - name: podcasts
-      persistentVolumeClaim:
-        claimName: jellyfin-podcasts
-        readOnly: false
-    - name: youtube
-      persistentVolumeClaim:
-        claimName: jellyfin-youtube
-        readOnly: false
-    - name: lectures
-      persistentVolumeClaim:
-        claimName: jellyfin-lectures
+        existingClaim: music
+      books:
+        enabled: true
         readOnly: true
-    - name: shows
-      persistentVolumeClaim:
-        claimName: jellyfin-shows
+        existingClaim: books
+      shows:
+        enabled: true
         readOnly: true
-    - name: books
-      persistentVolumeClaim:
-        claimName: jellyfin-books
+        existingClaim: shows
+      movies:
+        enabled: true
         readOnly: true
-    - name: movies
-      persistentVolumeClaim:
-        claimName: jellyfin-movies
-        readOnly: true
-    additionalVolumeMounts:
-    - name: music
-      mountPath: "/mnt/music"
-    - name: podcasts
-      mountPath: "/mnt/podcasts"
-    - name: youtube
-      mountPath: "/mnt/youtube"
-    - name: lectures
-      mountPath: "/mnt/lectures"
-    - name: shows
-      mountPath: "/mnt/shows"
-    - name: books
-      mountPath: "/mnt/books"
-    - name: movies
-      mountPath: "/mnt/movies"
+        existingClaim: movies
+      youtube:
+        enabled: true
+        existingClaim: youtube
     resources:
+      requests:
+        gpu.intel.com/i915: 1
       limits:
         gpu.intel.com/i915: 1
