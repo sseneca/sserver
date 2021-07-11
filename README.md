@@ -10,7 +10,7 @@ runs [Parabola GNU/Linux-libre](https://www.parabola.nu/).
 Kubernetes is ran via [k3s](https://k3s.io). [Flux](https://fluxcd.io/)
 is used for GitOps as well as automating e.g. image upgrades. I try to
 use Helm charts whenever I can via the [Helm
-Controller](https://fluxcd.io/docs/components/helm/) Secrets are
+Controller](https://fluxcd.io/docs/components/helm/). Secrets are
 [sealed](https://github.com/bitnami-labs/sealed-secrets).
 
 ## Caveats
