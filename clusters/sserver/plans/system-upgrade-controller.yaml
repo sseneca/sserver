@@ -74,12 +74,14 @@ spec:
         envFrom:
         - configMapRef:
             name: default-controller-env
-        image: rancher/system-upgrade-controller:v0.6.2
+        image: rancher/system-upgrade-controller:v0.7.1
         imagePullPolicy: IfNotPresent
         name: system-upgrade-controller
         volumeMounts:
         - mountPath: /etc/ssl
           name: etc-ssl
+        - mountPath: /etc/pki
+          name: etc-pki
         - mountPath: /tmp
           name: tmp
         - mountPath: /etc/ca-certificates/extracted
@@ -91,11 +93,21 @@ spec:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
         operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      - effect: NoExecute
+        key: node-role.kubernetes.io/etcd
+        operator: Exists
       volumes:
       - hostPath:
           path: /etc/ssl
           type: Directory
         name: etc-ssl
+      - hostPath:
+          path: /etc/pki
+          type: DirectoryOrCreate
+        name: etc-pki
       - emptyDir: {}
         name: tmp
       - hostPath:
