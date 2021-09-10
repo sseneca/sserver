@@ -18,19 +18,19 @@ spec:
   values:
     image:
       repository: drone/drone # {"$imagepolicy": "flux-system:drone:name"}
-      tag: 2.2.0 # {"$imagepolicy": "flux-system:drone:tag"}
+      tag: 2.3.1 # {"$imagepolicy": "flux-system:drone:tag"}
     ingress:
       enabled: true
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-      - host: drone.ssene.ca
-        paths:
-        - "/"
+        - host: drone.ssene.ca
+          paths:
+            - "/"
       tls:
-      - hosts:
-        - drone.ssene.ca
-        secretName: drone-tls-cert
+        - hosts:
+            - drone.ssene.ca
+          secretName: drone-tls-cert
     persistentVolume:
       enabled: false
     env:
