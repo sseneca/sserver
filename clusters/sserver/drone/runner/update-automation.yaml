@@ -1,0 +1,47 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: drone-runner-kube
+  namespace: flux-system
+spec:
+  image: drone/drone-runner-kube
+  interval: 1m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: drone-runner-kube
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: drone-runner-kube
+  filterTags:
+    pattern: '-linux-amd64'
+  policy:
+    semver:
+      range: ^1.0.0-0.x
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: drone-runner-kube
+  namespace: flux-system
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  update:
+    path: clusters/sserver/drone/runner
+    strategy: Setters
