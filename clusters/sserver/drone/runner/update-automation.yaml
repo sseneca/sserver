@@ -27,6 +27,7 @@ metadata:
   name: drone-runner-kube
   namespace: flux-system
 spec:
+  suspend: true
   git:
     checkout:
       ref:
