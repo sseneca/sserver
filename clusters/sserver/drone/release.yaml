@@ -17,8 +17,8 @@ spec:
       name: drone-secrets
   values:
     image:
-      repository: drone/drone
-      tag: 2.2.0
+      repository: drone/drone # {"$imagepolicy": "flux-system:drone:name"}
+      tag: 2.2.0 # {"$imagepolicy": "flux-system:drone:tag"}
     ingress:
       enabled: true
       annotations:
