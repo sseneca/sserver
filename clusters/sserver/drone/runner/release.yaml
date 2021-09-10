@@ -17,8 +17,8 @@ spec:
       name: drone-runner-kube-secrets
   values:
     image:
-      repository: drone/drone-runner-kube # {"$imagepolicy": "flux-system:drone-runner-kube:name"}
-      tag: 1.0.0-beta.9-linux-amd64 # {"$imagepolicy": "flux-system:drone-runner-kube:tag"}
+      repository: drone/drone-runner-kube
+      tag: 1.0.0-beta.11-linux-amd64
     ingress:
       enabled: true
       annotations:
