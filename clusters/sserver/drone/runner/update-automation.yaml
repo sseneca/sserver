@@ -18,8 +18,8 @@ spec:
   filterTags:
     pattern: '-linux-amd64'
   policy:
-    semver:
-      range: '> 1.0.0-0.10'
+    numerical:
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
