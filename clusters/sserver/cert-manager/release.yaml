@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cert-manager
-      version: v1.4.0
+      version: v1.5.4
       sourceRef:
         name: jetstack
         kind: HelmRepository
@@ -18,14 +18,14 @@ spec:
     image:
       registry: quay.io
       repository: jetstack/cert-manager-controller
-      tag: v1.4.0
+      tag: v1.5.4
     webhook:
       image:
         registry: quay.io
         repository: jetstack/cert-manager-webhook
-        tag: v1.4.0
+        tag: v1.5.4
     cainjector:
       image:
         registry: quay.io
         repository: jetstack/cert-manager-cainjector
-        tag: v1.4.0
+        tag: v1.5.4
