@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: photos-nextcloud
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 200Gi
   accessModes:
@@ -25,7 +25,7 @@ metadata:
   name: photos-nextcloud
   namespace: nextcloud
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: photos-nextcloud
   accessModes:
     - ReadWriteOnce

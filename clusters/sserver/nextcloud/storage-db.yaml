@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: database-nextcloud
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 10Gi
   accessModes:
@@ -25,7 +25,7 @@ metadata:
   name: database-nextcloud
   namespace: nextcloud
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: database-nextcloud
   accessModes:
     - ReadWriteOnce
