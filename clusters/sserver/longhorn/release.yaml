@@ -52,6 +52,7 @@ spec:
           tag: v3.0.3
     persistence:
       defaultFsType: btrfs
+      defaultClassReplicaCount: 1
     ingress:
       enabled: true
       host: longhorn.ssene.ca
@@ -64,5 +65,11 @@ spec:
         nginx.ingress.kubernetes.io/auth-secret: basic-auth
         nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required '
         nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+    csi:
+      attacherReplicaCount: 1
+      provisionerReplicaCount: 1
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
     defaultSettings:
       backupTarget: nfs://10.0.0.2:/srv/nfs/backups
+      defaultReplicaCount: 1
