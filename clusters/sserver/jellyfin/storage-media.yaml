@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-music
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 100Gi
   accessModes:
@@ -25,7 +25,7 @@ metadata:
   name: music
   namespace: jellyfin
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: jellyfin-music
   accessModes:
     - ReadWriteOnce
@@ -38,7 +38,7 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-youtube
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 50Gi
   accessModes:
@@ -60,7 +60,7 @@ metadata:
   name: youtube
   namespace: jellyfin
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: jellyfin-youtube
   accessModes:
     - ReadWriteOnce
@@ -73,7 +73,7 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-books
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 10Gi
   accessModes:
@@ -95,7 +95,7 @@ metadata:
   name: books
   namespace: jellyfin
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: jellyfin-books
   accessModes:
     - ReadWriteOnce
@@ -108,7 +108,7 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-movies
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 500Gi
   accessModes:
@@ -130,7 +130,7 @@ metadata:
   name: movies
   namespace: jellyfin
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: jellyfin-movies
   accessModes:
     - ReadWriteOnce
@@ -143,7 +143,7 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-shows
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   capacity:
     storage: 500Gi
   accessModes:
@@ -165,7 +165,7 @@ metadata:
   name: shows
   namespace: jellyfin
 spec:
-  storageClassName: local-path
+  storageClassName: longhorn
   volumeName: jellyfin-shows
   accessModes:
     - ReadWriteOnce
