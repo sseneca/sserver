@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: nextcloud
-      tag: 22.2.0-fpm-alpine
+      tag: 22.2.2-fpm-alpine
     ingress:
       enabled: true
       annotations:
@@ -58,7 +58,7 @@ spec:
       enabled: true
       image:
         repository: nginx
-        tag: 1.21.3-alpine
+        tag: 1.21.4-alpine
     internalDatabase:
       enabled: false
     externalDatabase:
