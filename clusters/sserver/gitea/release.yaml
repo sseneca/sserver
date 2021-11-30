@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gitea
-      version: 3.1.4
+      version: 4.1.1
       sourceRef:
         name: gitea
         kind: HelmRepository
@@ -19,8 +19,18 @@ spec:
   values:
     image:
       repository: gitea/gitea
-      tag: 1.14.6
-      rootless: false
+      tag: 1.15.6
+      rootless: true
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
     service:
       http:
         type: ClusterIP
@@ -30,10 +40,14 @@ spec:
         port: 22
     ingress:
       enabled: true
+      className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-      - git.ssene.ca
+        - host: git.ssene.ca
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
       - hosts:
         - git.ssene.ca
