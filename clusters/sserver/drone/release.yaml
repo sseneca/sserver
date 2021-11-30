@@ -64,9 +64,10 @@ spec:
       tag: 13.0.0
     persistence:
       existingClaim: database-drone
+    postgresqlPostgresPassword: "Wut9MewnRpE7gg2C"
     volumePermissions:
       enabled: true
     psp:
-      create: true
+      create: false
     rbac:
       create: true
