@@ -57,14 +57,13 @@ spec:
         kind: HelmRepository
   valuesFrom:
     - kind: Secret
-      name: postgresql
+      name: drone-postgresql-secrets
   values:
     image:
       repository: bitnami/postgresql
       tag: 13.0.0
     persistence:
       existingClaim: database-drone
-    postgresqlPostgresPassword: "Wut9MewnRpE7gg2C"
     volumePermissions:
       enabled: true
     psp:
