@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotify
+  namespace: gotify
+  labels:
+    app: gotify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gotify
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gotify
+    spec:
+      containers:
+        - image: gotify/server:2.1.3
+          name: gotify
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: GOTIFY_SERVER_PORT
+              value: "8069"
+            - name: GOTIFY_DATABASE_DIALECT
+              value: postgres
+          envFrom:
+            - secretRef:
+               name: config
+          ports:
+            - containerPort: 8069
+              name: gotify
+          volumeMounts:
+            - mountPath: /app/data
+              name: data
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: gotify-data
+status: {}
