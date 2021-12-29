@@ -9,11 +9,11 @@ spec:
   chart:
     spec:
       chart: intel-gpu-plugin
-      version: 3.2.0
+      version: 4.1.0
       sourceRef:
         name: k8s-at-home
         kind: HelmRepository
   values:
     image:
       repository: intel/intel-gpu-plugin
-      tag: 0.21.0
+      tag: 0.23.0
