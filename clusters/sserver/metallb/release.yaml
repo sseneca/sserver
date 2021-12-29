@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: 2.4.3
+      version: 2.5.16
       sourceRef:
         name: bitnami
         namespace: flux-system
@@ -24,8 +24,8 @@ spec:
     controller:
       image:
         repository: bitnami/metallb-controller
-        tag: 0.10.2
+        tag: 0.11.0
     speaker:
       image:
         repository: bitnami/metallb-speaker
-        tag: 0.10.2
+        tag: 0.11.0
