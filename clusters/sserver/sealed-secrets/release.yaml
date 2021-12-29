@@ -9,11 +9,12 @@ spec:
   chart:
     spec:
       chart: sealed-secrets
-      version: 1.13.2
+      version: 2.0.2
       sourceRef:
         name: bitnami
         kind: HelmRepository
   values:
     image:
-      repository: quay.io/bitnami/sealed-secrets-controller
-      tag: v0.16.0
+      registry: quay.io
+      repository: bitnami/sealed-secrets-controller
+      tag: v0.17.1
