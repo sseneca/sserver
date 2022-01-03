@@ -9,12 +9,13 @@ spec:
   chart:
     spec:
       chart: ingress-nginx
-      version: 3.30.0
+      version: 4.0.13
       sourceRef:
         name: ingress-nginx
         kind: HelmRepository
   values:
     controller:
       image:
-        repository: k8s.gcr.io/ingress-nginx/controller
-        tag: v0.46.0
+        registry: k8s.gcr.io
+        repository: ingress-nginx/controller
+        tag: "v1.1.0"
