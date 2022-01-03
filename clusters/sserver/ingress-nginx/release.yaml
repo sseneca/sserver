@@ -17,5 +17,5 @@ spec:
     controller:
       image:
         registry: k8s.gcr.io
-        repository: ingress-nginx/controller
+        image: ingress-nginx/controller
         tag: "v1.1.0"

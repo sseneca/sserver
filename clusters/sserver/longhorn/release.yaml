@@ -55,6 +55,7 @@ spec:
       defaultClassReplicaCount: 1
     ingress:
       enabled: true
+      ingressClassName: ingress
       host: longhorn.ssene.ca
       tls: true
       tlsSecret: longhorn-tls-cert

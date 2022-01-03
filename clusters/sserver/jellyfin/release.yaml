@@ -25,6 +25,7 @@ spec:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
+        ingressClassName: "nginx"
         hosts:
           - host: jellyfin.ssene.ca
             paths:
