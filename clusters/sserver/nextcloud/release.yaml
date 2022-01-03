@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 2.6.5
+      version: 2.11.3
       sourceRef:
         name: nextcloud
         kind: HelmRepository
@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: nextcloud
-      tag: 22.2.2-fpm-alpine
+      tag: 22.2.3-fpm-alpine
     ingress:
       enabled: true
       className: nginx
@@ -82,7 +82,8 @@ spec:
         create: true
     redis:
       enabled: true
-      usePassword: true
+      auth:
+        enabled: true
     persistence:
       enabled: true
     livenessProbe:
