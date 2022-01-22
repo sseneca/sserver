@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gitea
-      version: 4.1.1
+      version: 5.0.1
       sourceRef:
         name: gitea
         kind: HelmRepository
@@ -19,9 +19,11 @@ spec:
   values:
     image:
       repository: gitea/gitea
-      tag: 1.15.9
+      tag: 1.15.10
       rootless: true
-    securityContext:
+    podSecurityContext:
+      fsGroup: 1000
+    containerSecurityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -74,6 +76,7 @@ spec:
           DISABLE_GRAVATAR: true
           ENABLE_FEDERATED_AVATAR: true
     postgresql:
+      enabled: true
       image:
         tag: 13.1.0
       persistence:
