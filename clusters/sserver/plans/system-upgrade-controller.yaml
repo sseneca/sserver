@@ -29,7 +29,7 @@ data:
   SYSTEM_UPGRADE_JOB_ACTIVE_DEADLINE_SECONDS: "900"
   SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: "99"
   SYSTEM_UPGRADE_JOB_IMAGE_PULL_POLICY: Always
-  SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: rancher/kubectl:v1.18.3
+  SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: rancher/kubectl:v1.18.20
   SYSTEM_UPGRADE_JOB_PRIVILEGED: "true"
   SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISH: "900"
   SYSTEM_UPGRADE_PLAN_POLLING_INTERVAL: 15m
@@ -58,9 +58,7 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: node-role.kubernetes.io/master
-                operator: In
-                values:
-                - "true"
+                operator: Exists
       containers:
       - env:
         - name: SYSTEM_UPGRADE_CONTROLLER_NAME
@@ -74,7 +72,7 @@ spec:
         envFrom:
         - configMapRef:
             name: default-controller-env
-        image: rancher/system-upgrade-controller:v0.7.1
+        image: rancher/system-upgrade-controller:v0.8.1
         imagePullPolicy: IfNotPresent
         name: system-upgrade-controller
         volumeMounts:
@@ -92,6 +90,9 @@ spec:
         operator: Exists
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/controlplane
         operator: Exists
       - effect: NoSchedule
         key: node-role.kubernetes.io/control-plane
@@ -112,5 +113,5 @@ spec:
         name: tmp
       - hostPath:
           path: /etc/ca-certificates/extracted
-          type: Directory
+          type: DirectoryOrCreate
         name: etc-extracted
