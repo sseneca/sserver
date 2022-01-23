@@ -16,8 +16,8 @@ spec:
         kind: HelmRepository
   values:
     image:
-      repository: jellyfin/jellyfin # {"$imagepolicy": "flux-system:jellyfin:name"}
-      tag: 10.7.7 # {"$imagepolicy": "flux-system:jellyfin:tag"}
+      repository: jellyfin/jellyfin
+      tag: 10.7.7
     env:
       TZ: "Europe/London"
     ingress:
