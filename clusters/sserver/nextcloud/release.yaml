@@ -94,3 +94,9 @@ spec:
       enabled: true
     lifecycle:
       postStartCommand: ["/bin/sh", "-c", "crond"]
+    metrics:
+      enabled: true
+      https: true
+      image:
+        repository: xperimental/nextcloud-exporter
+        tag: 0.5.0
