@@ -18,7 +18,7 @@ spec:
         app: dendrite
     spec:
       containers:
-        - image: matrixdotorg/dendrite-monolith:v0.5.1
+        - image: matrixdotorg/dendrite-monolith:v0.6.2
           name: monolith
           ports:
             - containerPort: 8008
@@ -30,6 +30,9 @@ spec:
             - mountPath: /var/dendrite/media
               name: media
               readOnly: false
+            - mountPath: /var/jetstream
+              name: jetstream
+              readOnly: false
       restartPolicy: Always
       volumes:
         - name: encryption-secrets
@@ -38,4 +41,7 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: dendrite-media
+        - name: jetstream
+          persistentVolumeClaim:
+            claimName: dendrite-jetstream
 status: {}
