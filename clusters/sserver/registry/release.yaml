@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: registry
+  namespace: registry
+spec:
+  interval: 5m
+  releaseName: registry
+  chart:
+    spec:
+      chart: docker-registry
+      version: 2.1.0
+      sourceRef:
+        name: docker-registry
+        kind: HelmRepository
+  values:
+    image:
+      repository: registry
+      tag: 2.8.1
+    ingress:
+      enabled: true
+      className: nginx
+      path: /
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/auth-type: basic
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/auth-secret: basic-auth
+        nginx.ingress.kubernetes.io/auth-realm: "Authentication Required "
+        nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+      hosts:
+        - registry.ssene.ca
+      tls:
+        - hosts:
+            - registry.ssene.ca
+          secretName: registry-tls-cert
+      persistence:
+        enabled: true

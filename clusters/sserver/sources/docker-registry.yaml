@@ -1,0 +1,8 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: docker-registry
+  namespace: registry
+spec:
+  interval: 1m
+  url: https://twuni.github.io/docker-registry.helm
