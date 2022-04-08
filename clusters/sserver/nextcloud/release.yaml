@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 2.11.3
+      version: 2.13.2
       sourceRef:
         name: nextcloud
         kind: HelmRepository
@@ -38,6 +38,9 @@ spec:
         - hosts:
             - cloud.ssene.ca
           secretName: nextcloud-tls-cert
+    phpClientHttpsFix:
+      enabled: true
+      protocol: https
     nextcloud:
       host: cloud.ssene.ca
       extraVolumes:
