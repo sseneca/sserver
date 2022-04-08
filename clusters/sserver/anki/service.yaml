@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: http
+  namespace: anki
+spec:
+  ports:
+    - name: anki
+      port: 27701
+      targetPort: 27701
+  selector:
+    app: anki
+status:
+  loadBalancer: {}
