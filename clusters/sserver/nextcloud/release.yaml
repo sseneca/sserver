@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: nextcloud
-      tag: 23.0.2-fpm-alpine
+      tag: 23.0.3-fpm-alpine
     ingress:
       enabled: true
       className: nginx
@@ -35,19 +35,19 @@ spec:
               return 301 https://$host/remote.php/dav;
           }
       tls:
-      - hosts:
-        - cloud.ssene.ca
-        secretName: nextcloud-tls-cert
+        - hosts:
+            - cloud.ssene.ca
+          secretName: nextcloud-tls-cert
     nextcloud:
       host: cloud.ssene.ca
       extraVolumes:
-      - name: photos
-        persistentVolumeClaim:
-          claimName: photos-nextcloud
-          readOnly: false
+        - name: photos
+          persistentVolumeClaim:
+            claimName: photos-nextcloud
+            readOnly: false
       extraVolumeMounts:
-      - name: photos
-        mountPath: "/mnt/photos"
+        - name: photos
+          mountPath: "/mnt/photos"
       extraEnv:
         - name: TRUSTED_PROXIES
           value: ingress-nginx-controller.kube-system.svc.cluster.local
