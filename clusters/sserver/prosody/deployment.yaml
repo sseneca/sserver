@@ -18,7 +18,7 @@ spec:
         app: prosody
     spec:
       containers:
-        - image: prosody/prosody:0.11.9
+        - image: registry.ssene.ca/prosody:0.12.0
           name: prosody
           ports:
             - containerPort: 5222
@@ -34,6 +34,8 @@ spec:
             - mountPath: /etc/prosody/certs
               name: certs
               readOnly: true
+      imagePullSecrets:
+        - name: sseneca
       restartPolicy: Always
       volumes:
         - name: configuration
