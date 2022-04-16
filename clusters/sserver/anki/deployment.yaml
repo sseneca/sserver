@@ -29,15 +29,15 @@ spec:
             - name: ANKISYNCD_PORT
               value: "27701"
             - name: ANKISYNCD_DATA_ROOT
-              value: "./collections"
+              value: "/app/data/collections"
             - name: ANKISYNCD_BASE_URL
               value: "/sync/"
             - name: ANKISYNCD_BASE_MEDIA_URL
               value: "/msync/"
             - name: ANKISYNCD_AUTH_DB_PATH
-              value: "./auth.db"
+              value: "/app/data/auth.db"
             - name: ANKISYNCD_SESSION_DB_PATH
-              value: "./session.db"
+              value: "/app/data/session.db"
           volumeMounts:
             - mountPath: /app/data
               name: data
