@@ -42,15 +42,9 @@ spec:
             - mountPath: /app/data
               name: data
               readOnly: false
-            - mountPath: /opt/ankisyncd
-              name: opt
-              readOnly: false
       restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: anki-data
-        - name: opt
-          persistentVolumeClaim:
-            claimName: anki-opt
 status: {}
