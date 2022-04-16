@@ -13,11 +13,11 @@ spec:
   nodeAffinity:
     required:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - sserver
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sserver
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -27,6 +27,41 @@ metadata:
 spec:
   storageClassName: local-path
   volumeName: anki-data
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: anki-opt
+spec:
+  storageClassName: local-path
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /srv/smb/media/anki-opt
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: anki-opt
+  namespace: anki
+spec:
+  storageClassName: local-path
+  volumeName: anki-opt
   accessModes:
     - ReadWriteOnce
   resources:
