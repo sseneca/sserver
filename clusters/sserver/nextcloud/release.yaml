@@ -34,6 +34,14 @@ spec:
           location = /.well-known/caldav {
               return 301 https://$host/remote.php/dav;
           }
+
+          location = /.well-known/webfinger {
+              return 301 https://$host/index.php/.well-known/webfinger;
+          }
+
+          location = /.well-known/nodeinfo {
+              return 301 https://$host/index.php/.well-known/nodeinfo;
+          }
       tls:
         - hosts:
             - cloud.ssene.ca
