@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 2.13.2
+      version: 2.14.4
       sourceRef:
         name: nextcloud
         kind: HelmRepository
@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: nextcloud
-      tag: 23.0.5-fpm-alpine
+      tag: 24.0.1-fpm-alpine
     ingress:
       enabled: true
       className: nginx
@@ -43,6 +43,9 @@ spec:
       protocol: https
     nextcloud:
       host: cloud.ssene.ca
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-admin
       extraVolumes:
         - name: photos
           persistentVolumeClaim:
@@ -62,25 +65,34 @@ spec:
       enabled: true
       image:
         repository: nginx
-        tag: 1.21.6-alpine
+        tag: 1.22.0-alpine
     internalDatabase:
       enabled: false
     externalDatabase:
       enabled: true
       type: postgresql
       host: nextcloud-postgresql.nextcloud.svc.cluster.local
+      existingSecret:
+        enabled: true
+        database: nextcloud
+        secretName: externaldatabase-secrets
     postgresql:
       enabled: true
-      persistence:
-        enabled: true
-        existingClaim: database-nextcloud
+      global:
+        postgresql:
+          auth:
+            username: nextcloud
+            database: nextcloud
+            existingSecret: postgresql-secrets
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: database-nextcloud
       image:
         repository: bitnami/postgresql
         tag: 13.1.0
       volumePermissions:
         enabled: true
-      psp:
-        create: true
       rbac:
         create: true
     redis:
@@ -89,6 +101,7 @@ spec:
         enabled: true
     persistence:
       enabled: true
+      existingClaim: data-nextcloud
     livenessProbe:
       enabled: false
     readinessProbe:
@@ -102,4 +115,4 @@ spec:
       https: true
       image:
         repository: xperimental/nextcloud-exporter
-        tag: 0.5.0
+        tag: 0.5.1
