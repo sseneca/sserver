@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: jellyfin
-      version: 8.2.0
+      version: 9.4.2
       sourceRef:
         name: k8s-at-home
         namespace: flux-system
@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: jellyfin/jellyfin
-      tag: 10.7.7
+      tag: 10.8.0
     env:
       TZ: "Europe/London"
     ingress:
