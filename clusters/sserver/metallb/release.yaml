@@ -24,8 +24,8 @@ spec:
     controller:
       image:
         repository: bitnami/metallb-controller
-        tag: 0.13.3
+        tag: 0.12.1
     speaker:
       image:
         repository: bitnami/metallb-speaker
-        tag: 0.13.3
+        tag: 0.12.1
